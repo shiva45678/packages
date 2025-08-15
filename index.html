@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO and Social Media Metadata -->
+    <title>Health Packages - Newtons Ai Hospitals</title>
+    <meta name="description" content="Explore and book affordable health checkup packages from Newtons Ai Hospitals. Get comprehensive tests and consultations at great prices.">
+    
+    <!-- Open Graph / Facebook / WhatsApp -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://your-website-url.com/"> <!-- Replace with your actual URL -->
+    <meta property="og:title" content="Book Health Packages by Clicking This Link">
+    <meta property="og:description" content="Affordable and comprehensive health checkups from Newtons Ai Hospitals. Book now!">
+    <meta property="og:image" content="https://mediwheel.in/uploads/blog/basic-health-checkup-packages.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://your-website-url.com/"> <!-- Replace with your actual URL -->
+    <meta property="twitter:title" content="Book Health Packages by Clicking This Link">
+    <meta property="twitter:description" content="Affordable and comprehensive health checkups from Newtons Ai Hospitals. Book now!">
+    <meta property="twitter:image" content="https://mediwheel.in/uploads/blog/basic-health-checkup-packages.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Noto+Sans+Telugu:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #00796B; /* Teal */
+            --secondary-color: #004D40; /* Darker Teal */
+            --accent-color: #FFC107; /* Amber */
+            --sale-color: #D32F2F; /* Red for discounts */
+            --light-bg: #F5F7FA;
+            --white: #fff;
+            --text-color: #333;
+        }
+
+        /* General Styles */
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Poppins', 'Noto Sans Telugu', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px 0;
+        }
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            color: var(--secondary-color);
+        }
+        section { padding: 60px 0; }
+
+        /* Header */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; }
+        .logo { font-size: 1.6em; font-weight: 700; color: var(--primary-color); }
+        .logo .ai-text { color: var(--accent-color); }
+        .nav-links { list-style: none; display: flex; gap: 30px; }
+        .nav-links a { text-decoration: none; color: var(--text-color); font-weight: 600; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--primary-color); }
+        .menu-toggle { display: none; font-size: 1.5em; cursor: pointer; }
+
+        /* Hero Slider */
+        .hero-slider {
+            position: relative;
+            width: 100%;
+            height: 85vh;
+            max-height: 550px;
+            overflow: hidden;
+            background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
+        }
+        .slides-wrapper { display: flex; width: 100%; height: 100%; transition: transform 0.5s ease-in-out; }
+        .slide {
+            flex: 0 0 100%;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .slide-card {
+            display: flex;
+            align-items: center;
+            background: var(--white);
+            width: 100%;
+            max-width: 900px;
+            height: 70%;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        .slide-image { flex: 0 0 50%; height: 100%; }
+        .slide-image img { width: 100%; height: 100%; object-fit: cover; }
+        .slide-content { flex: 1; padding: 40px; text-align: left; }
+        .slide-content h1 {
+            font-size: 2.5em;
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+        .slide-content .price { font-size: 2em; font-weight: 700; color: var(--primary-color); margin-bottom: 25px; }
+        .cta-button {
+            background-color: var(--accent-color); color: var(--text-color);
+            padding: 15px 35px; text-decoration: none; border-radius: 50px;
+            font-weight: 700; transition: background-color 0.3s, transform 0.3s;
+            display: inline-block;
+        }
+        .slider-btn {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2); border: none;
+            color: var(--white); font-size: 2em; cursor: pointer;
+            padding: 10px 15px; z-index: 10; transition: background 0.3s;
+        }
+        .slider-btn:hover { background: rgba(255, 255, 255, 0.4); }
+        .prev { left: 10px; }
+        .next { right: 10px; }
+        .slider-dots {
+            position: absolute; bottom: 20px; left: 50%;
+            transform: translateX(-50%); display: flex; gap: 10px; z-index: 10;
+        }
+        .dot {
+            width: 12px; height: 12px; background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%; cursor: pointer; transition: background 0.3s;
+        }
+        .dot.active { background: var(--white); }
+
+        /* Packages Section */
+        #packages { padding-top: 60px; }
+        .section-title { text-align: center; margin-bottom: 50px; font-size: 2.2em; }
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .package-card {
+            background-color: var(--white); border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.07); overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex; flex-direction: column;
+        }
+        .package-card:hover { transform: translateY(-10px); box-shadow: 0 10px 35px rgba(0,0,0,0.1); }
+        .package-image img { width: 100%; height: 200px; object-fit: cover; }
+        .package-content { padding: 25px; flex-grow: 1; display: flex; flex-direction: column; }
+        .package-content h4 { margin-top: 0; color: var(--primary-color); font-size: 1.3em; }
+        .price-container { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;}
+        .price-tag { font-size: 2em; font-weight: 700; color: var(--secondary-color); }
+        .original-price { color: #888; text-decoration: line-through; }
+        .discount-badge {
+            background-color: var(--sale-color); color: var(--white);
+            padding: 3px 10px; border-radius: 50px; font-size: 0.8em; font-weight: 700;
+        }
+        .package-content .tests-list { flex-grow: 1; margin-bottom: 20px; color: #555; }
+        .buy-now-button {
+            display: block; width: 100%; text-align: center;
+            background-color: var(--accent-color); color: var(--text-color);
+            padding: 15px; text-decoration: none; border-radius: 8px;
+            font-weight: 700; font-size: 1.1em;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .buy-now-button:hover { background-color: #ffcd38; transform: scale(1.05); }
+
+        /* Other Sections */
+        #about, #contact { background-color: var(--white); }
+        #contact { background: var(--light-bg); }
+        .map-container {
+            margin-top: 40px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.07);
+        }
+        footer { background-color: var(--secondary-color); color: var(--white); padding: 40px 0; text-align: center; }
+        .social-media a { color: var(--white); margin: 0 10px; font-size: 1.5em; transition: color 0.3s; }
+        .social-media a:hover { color: var(--accent-color); }
+        
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .slide-content h1 { font-size: 2em; }
+            .slide-content { padding: 30px; }
+        }
+        @media (max-width: 768px) {
+            .section-title { font-size: 1.8em; }
+            .nav-links {
+                display: none; flex-direction: column; width: 100%;
+                text-align: center; background-color: var(--white);
+                position: absolute; top: 70px; left: 0;
+                padding: 20px 0; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            }
+            .nav-links.active { display: flex; }
+            .menu-toggle { display: block; }
+
+            .hero-slider { height: auto; max-height: none; }
+            .slide-card { flex-direction: column; height: auto; max-height: 90vh; }
+            .slide-image { flex: 0 0 50%; width: 100%; height: 250px; }
+            .slide-content { text-align: center; padding: 25px; }
+            .slide-content h1 { font-size: 1.8em; }
+            .slide-content .price { font-size: 1.5em; margin-bottom: 20px;}
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="navbar container">
+            <div class="logo">Newtons <span class="ai-text">Ai</span> Hospitals</div>
+            <ul class="nav-links">
+                <li><a href="#packages">Packages</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="menu-toggle"><i class="fas fa-bars"></i></div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero" class="hero-slider">
+            <div class="slides-wrapper">
+                <!-- Slide 1: Basic Package -->
+                <div class="slide">
+                    <div class="slide-card">
+                        <div class="slide-image"><img src="https://mediwheel.in/uploads/blog/basic-health-checkup-packages.png" alt="Basic Health Checkup"></div>
+                        <div class="slide-content">
+                            <h1>Basic Health Package</h1>
+                            <div class="price">Now at just ₹500!</div>
+                            <form><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_R5XoJpLSejNvWV" async> </script> </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slide 2: Joint Pain Package -->
+                <div class="slide">
+                    <div class="slide-card">
+                       <div class="slide-image"><img src="https://ppschicago.com/wp-content/uploads/2023/11/The-Best-Pain-Management-Treatment-in-Long-Beach-NY.jpg" alt="Joint Pain Package"></div>
+                        <div class="slide-content">
+                            <h1>Joint Pain Package</h1>
+                            <div class="price">Special Offer: ₹1,000</div>
+                            <form><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_R5XvzCDZslW1LB" async> </script> </form>
+                        </div>
+                    </div>
+                </div>
+                 <!-- Slide 3: Senior Citizen Package -->
+                 <div class="slide">
+                     <div class="slide-card">
+                        <div class="slide-image"><img src="https://www.southindianbank.com/Userfiles/Blog/19341902822229.jpg" alt="Senior Citizen Package"></div>
+                        <div class="slide-content">
+                            <h1>Senior Citizen Package</h1>
+                            <div class="price">Care for Elders: ₹1,500</div>
+                            <form><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_R5Y6tr3NOM3vpU" async> </script> </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slide 4: Women's Package -->
+                <div class="slide">
+                    <div class="slide-card">
+                        <div class="slide-image"><img src="https://images.moneycontrol.com/static-mcnews/2025/07/20250720120501_Shruti-Haasan.jpg" alt="Women's Package"></div>
+                        <div class="slide-content">
+                            <h1>Women’s Health Package</h1>
+                            <div class="price">For Her Wellness: ₹1,400</div>
+                            <form><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_R5Y5hZc7LcQaRk" async> </script> </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="slider-btn prev"><i class="fas fa-chevron-left"></i></button>
+            <button class="slider-btn next"><i class="fas fa-chevron-right"></i></button>
+            <div class="slider-dots"></div>
+        </section>
+
+        <section id="packages">
+            <div class="container">
+                <h2 class="section-title">Limited Time Health Offers</h2>
+                <div class="packages-grid">
+                    
+                    <!-- Basic Health Package -->
+                    <div class="package-card">
+                        <div class="package-image"><img src="https://mediwheel.in/uploads/blog/basic-health-checkup-packages.png" alt="Basic Health Checkup"></div>
+                        <div class="package-content">
+                            <h4>Basic Health Package</h4>
+                            <div class="price-container">
+                                <div class="price-tag">₹500</div>
+                                <div class="original-price">₹750</div>
+                                <div class="discount-badge">33% OFF</div>
+                            </div>
+                            <p class="tests-list">Includes: RFT, Urine Routine, Blood Grouping, ECG, AI Consultation, Doctor Consultation.</p>
+                            <form><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_R5XoJpLSejNvWV" async> </script> </form>
+                        </div>
+                    </div>
+
+                    <!-- Joint Pain Package -->
+                    <div class="package-card">
+                        <div class="package-image"><img src="https://ppschicago.com/wp-content/uploads/2023/11/The-Best-Pain-Management-Treatment-in-Long-Beach-NY.jpg" alt="Joint Pain"></div>
+                        <div class="package-content">
+                            <h4>Joint Pain Package</h4>
+                            <div class="price-container">
+                                <div class="price-tag">₹1,000</div>
+                                <div class="original-price">₹1500</div>
+                                <div class="discount-badge">33% OFF</div>
+                            </div>
+                            <p class="tests-list">Includes Basic Package + CRP, Uric Acid, RA Factor.</p>
+                            <form><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_R5XvzCDZslW1LB" async> </script> </form>
+                        </div>
+                    </div>
+
+                    <!-- Thyroid Package -->
+                    <div class="package-card">
+                        <div class="package-image"><img src="https://www.morelandobgyn.com/hubfs/Thyroid.png" alt="Thyroid Checkup"></div>
+                        <div class="package-content">
+                            <h4>Thyroid Package</h4>
+                             <div class="price-container">
+                                <div class="price-tag">₹800</div>
+                                <div class="original-price">₹1200</div>
+                                <div class="discount-badge">33% OFF</div>
+                            </div>
+                            <p class="tests-list">Includes Basic Package + TSH.</p>
+                            <form><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_R5XyS03eB7huIF" async> </script> </form>
+                        </div>
+                    </div>
+
+                    <!-- Infection Screening Package -->
+                    <div class="package-card">
+                        <div class="package-image"><img src="https://hivinfo.nih.gov/sites/default/files/inline-images/HIV-AIDS_Basics.jpg" alt="Infection Screening"></div>
+                        <div class="package-content">
+                            <h4>Infection Screening</h4>
+                             <div class="price-container">
+                                <div class="price-tag">₹1,100</div>
+                                <div class="original-price">₹1600</div>
+                                <div class="discount-badge">31% OFF</div>
+                            </div>
+                            <p class="tests-list">Includes Basic Package + HIV, HBsAg, VDRL.</p>
+                            <form><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_R5Y10ACk8yVdyx" async> </script> </form>
+                        </div>
+                    </div>
+
+                    <!-- Heart Package -->
+                    <div class="package-card">
+                        <div class="package-image"><img src="https://www.medicoverhospitals.in/images/diseases/myocardial-Infarction-overview.webp" alt="Heart Health"></div>
+                        <div class="package-content">
+                            <h4>Heart Package</h4>
+                             <div class="price-container">
+                                <div class="price-tag">₹1,200</div>
+                                <div class="original-price">₹1800</div>
+                                <div class="discount-badge">33% OFF</div>
+                            </div>
+                            <p class="tests-list">Includes Basic Package + Lipid Profile, Trop I/Trop T.</p>
+                            <form><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_R5Y2bS9QIZawZg" async> </script> </form>
+                        </div>
+                    </div>
+
+                    <!-- Alcoholics Package -->
+                    <div class="package-card">
+                        <div class="package-image"><img src="https://www.oceanrecovery.com/wp-content/uploads/2022/04/AdobeStock_213899729.jpeg" alt="Liver Health"></div>
+                        <div class="package-content">
+                            <h4>Alcoholics Package</h4>
+                             <div class="price-container">
+                                <div class="price-tag">₹1,300</div>
+                                <div class="original-price">₹1900</div>
+                                <div class="discount-badge">31% OFF</div>
+                            </div>
+                            <p class="tests-list">Includes Basic Package + LFT, GGT, Lipid Profile.</p>
+                            <form><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_R5Y4NhlsicS0Fy" async> </script> </form>
+                        </div>
+                    </div>
+                    
+                    <!-- Women’s Package -->
+                    <div class="package-card">
+                        <div class="package-image"><img src="https://images.moneycontrol.com/static-mcnews/2025/07/20250720120501_Shruti-Haasan.jpg" alt="Women's Health"></div>
+                        <div class="package-content">
+                           <h4>Women’s Package</h4>
+                            <div class="price-container">
+                                <div class="price-tag">₹1,400</div>
+                                <div class="original-price">₹2000</div>
+                                <div class="discount-badge">30% OFF</div>
+                            </div>
+                            <p class="tests-list">Includes Basic Package + TSH, Hb%, Pap Smear.</p>
+                            <form><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_R5Y5hZc7LcQaRk" async> </script> </form>
+                        </div>
+                    </div>
+
+                    <!-- Senior Citizen Package -->
+                    <div class="package-card">
+                        <div class="package-image"><img src="https://www.southindianbank.com/Userfiles/Blog/19341902822229.jpg" alt="Senior Citizen Health"></div>
+                        <div class="package-content">
+                            <h4>Senior Citizen Package</h4>
+                             <div class="price-container">
+                                <div class="price-tag">₹1,500</div>
+                                <div class="original-price">₹2000</div>
+                                <div class="discount-badge">25% OFF</div>
+                            </div>
+                            <p class="tests-list">Includes Basic Package + FBS, LFT, Lipid Profile, TSH.</p>
+                            <form><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_R5Y6tr3NOM3vpU" async> </script> </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about">
+            <div class="container" style="text-align: center; max-width: 800px;">
+                <h2 class="section-title">Why Choose Us?</h2>
+                <p>At Newtons Ai Hospitals, we provide a blend of state-of-the-art technology and compassionate care. Our team of experienced professionals is dedicated to patient well-being, ensuring you receive the highest quality health assessments. We believe in making comprehensive healthcare accessible and affordable for everyone.</p>
+            </div>
+        </section>
+
+        <section id="contact">
+            <div class="container" style="text-align: center; max-width: 800px;">
+                 <h2 class="section-title">Find Us & Get In Touch</h2>
+                 <p>Our team is here to help. Reach out to us for any inquiries about our packages or services.</p>
+                 <p style="font-size: 1.2em; margin: 20px 0;"><i class="fas fa-phone"></i> <a href="tel:6363111328" style="text-decoration: none; color: var(--primary-color);">6363111328</a></p>
+                 <p><i class="fas fa-map-marker-alt"></i> KVR College, Kalavakatta Road, Nandigama</p>
+                 <a href="https://share.google/TjIj2rx9SXsAFSVER" class="cta-button" style="margin: 20px 0; background-color: var(--primary-color); color: var(--white);">Visit Us</a>
+                 <div class="map-container">
+                    <iframe src="https://maps.google.com/maps?q=16.76627926601272,80.28368943806323&z=15&output=embed" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                 </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="social-media">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+            <p>&copy; 2024 Newtons Ai Hospitals. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        menuToggle.addEventListener('click', () => navLinks.classList.toggle('active'));
+
+        // Hero Slider Logic
+        const slidesWrapper = document.querySelector('.slides-wrapper');
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.querySelector('.prev');
+        const nextBtn = document.querySelector('.next');
+        const dotsContainer = document.querySelector('.slider-dots');
+        let currentSlide = 0;
+        let slideInterval;
+
+        slides.forEach((_, i) => {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if (i === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => { goToSlide(i); resetInterval(); });
+            dotsContainer.appendChild(dot);
+        });
+        const dots = document.querySelectorAll('.dot');
+
+        function goToSlide(slideNumber) {
+            slidesWrapper.style.transform = `translateX(-${slideNumber * 100}%)`;
+            dots.forEach(dot => dot.classList.remove('active'));
+            dots[slideNumber].classList.add('active');
+            currentSlide = slideNumber;
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            goToSlide(currentSlide);
+        }
+
+        function resetInterval() {
+            clearInterval(slideInterval);
+            slideInterval = setInterval(nextSlide, 5000);
+        }
+
+        nextBtn.addEventListener('click', () => { nextSlide(); resetInterval(); });
+        prevBtn.addEventListener('click', () => {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            goToSlide(currentSlide);
+            resetInterval();
+        });
+        
+        slideInterval = setInterval(nextSlide, 5000);
+    </script>
+
+</body>
+</html>
