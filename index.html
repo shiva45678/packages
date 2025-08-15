@@ -47,6 +47,9 @@
             color: var(--text-color);
             line-height: 1.6;
         }
+        body.menu-open {
+            overflow: hidden; /* Prevent background scrolling when menu is open */
+        }
         .container {
             width: 90%;
             max-width: 1200px;
@@ -70,10 +73,72 @@
         .navbar { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; }
         .logo { font-size: 1.6em; font-weight: 700; color: var(--primary-color); }
         .logo .ai-text { color: var(--accent-color); }
-        .nav-links { list-style: none; display: flex; gap: 30px; }
-        .nav-links a { text-decoration: none; color: var(--text-color); font-weight: 600; transition: color 0.3s; }
-        .nav-links a:hover { color: var(--primary-color); }
+        .desktop-nav-links { list-style: none; display: flex; gap: 30px; }
+        .desktop-nav-links a { text-decoration: none; color: var(--text-color); font-weight: 600; transition: color 0.3s; }
+        .desktop-nav-links a:hover { color: var(--primary-color); }
         .menu-toggle { display: none; font-size: 1.5em; cursor: pointer; }
+
+        /* --- Improved Side Panel --- */
+        .side-menu {
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            width: 280px;
+            background-color: var(--white);
+            z-index: 1002;
+            transform: translateX(100%);
+            transition: transform 0.4s ease-in-out;
+            padding: 40px;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+        }
+        .side-menu.active {
+            transform: translateX(0);
+        }
+        .side-menu .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            font-size: 2.5em;
+            color: var(--text-color);
+            cursor: pointer;
+        }
+        .side-menu .mobile-nav-links {
+            list-style: none;
+            padding: 0;
+            margin-top: 50px;
+        }
+        .side-menu .mobile-nav-links li {
+            margin-bottom: 20px;
+        }
+        .side-menu .mobile-nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-size: 1.2em;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        .side-menu .mobile-nav-links a:hover {
+            color: var(--primary-color);
+        }
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1001;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s, visibility 0.4s;
+        }
+        .menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
 
         /* Hero Slider */
         .hero-slider {
@@ -84,7 +149,16 @@
             overflow: hidden;
             background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
         }
-        .slides-wrapper { display: flex; width: 100%; height: 100%; transition: transform 0.5s ease-in-out; }
+        .slides-wrapper { 
+            display: flex; 
+            width: 100%; 
+            height: 100%; 
+            transition: transform 0.5s ease-in-out; 
+            cursor: grab;
+        }
+        .slides-wrapper.grabbing {
+            cursor: grabbing;
+        }
         .slide {
             flex: 0 0 100%;
             width: 100%;
@@ -93,6 +167,7 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
+            box-sizing: border-box;
         }
         .slide-card {
             display: flex;
@@ -104,9 +179,10 @@
             border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            user-select: none; /* Prevent text selection during swipe */
         }
         .slide-image { flex: 0 0 50%; height: 100%; }
-        .slide-image img { width: 100%; height: 100%; object-fit: cover; }
+        .slide-image img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
         .slide-content { flex: 1; padding: 40px; text-align: left; }
         .slide-content h1 {
             font-size: 2.5em;
@@ -195,17 +271,16 @@
         }
         @media (max-width: 768px) {
             .section-title { font-size: 1.8em; }
-            .nav-links {
-                display: none; flex-direction: column; width: 100%;
-                text-align: center; background-color: var(--white);
-                position: absolute; top: 70px; left: 0;
-                padding: 20px 0; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            }
-            .nav-links.active { display: flex; }
+            .desktop-nav-links { display: none; }
             .menu-toggle { display: block; }
-
+            
             .hero-slider { height: auto; max-height: none; }
-            .slide-card { flex-direction: column; height: auto; max-height: 90vh; }
+            .slides-wrapper { align-items: center; }
+            .slide { 
+                flex: 0 0 85%;
+                padding: 0 10px;
+            }
+            .slide-card { flex-direction: column; height: auto; max-height: 90vh; width: 100%; }
             .slide-image { flex: 0 0 50%; width: 100%; height: 250px; }
             .slide-content { text-align: center; padding: 25px; }
             .slide-content h1 { font-size: 1.8em; }
@@ -218,7 +293,7 @@
     <header>
         <nav class="navbar container">
             <div class="logo">Newtons <span class="ai-text">Ai</span> Hospitals</div>
-            <ul class="nav-links">
+            <ul class="desktop-nav-links">
                 <li><a href="#packages">Packages</a></li>
                 <li><a href="#about">About Us</a></li>
                 <li><a href="#contact">Contact</a></li>
@@ -226,6 +301,17 @@
             <div class="menu-toggle"><i class="fas fa-bars"></i></div>
         </nav>
     </header>
+
+    <!-- Side Menu for Mobile -->
+    <div class="menu-overlay"></div>
+    <div class="side-menu">
+        <div class="close-btn">&times;</div>
+        <ul class="mobile-nav-links">
+            <li><a href="#packages">Packages</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </div>
 
     <main>
         <section id="hero" class="hero-slider">
@@ -441,20 +527,51 @@
     </footer>
 
     <script>
-        // Mobile Menu Toggle
+        // --- Side Panel Logic ---
         const menuToggle = document.querySelector('.menu-toggle');
-        const navLinks = document.querySelector('.nav-links');
-        menuToggle.addEventListener('click', () => navLinks.classList.toggle('active'));
+        const sideMenu = document.querySelector('.side-menu');
+        const closeBtn = document.querySelector('.close-btn');
+        const menuOverlay = document.querySelector('.menu-overlay');
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-links a');
 
-        // Hero Slider Logic
+        function openMenu() {
+            sideMenu.classList.add('active');
+            menuOverlay.classList.add('active');
+            document.body.classList.add('menu-open');
+        }
+
+        function closeMenu() {
+            sideMenu.classList.remove('active');
+            menuOverlay.classList.remove('active');
+            document.body.classList.remove('menu-open');
+        }
+
+        menuToggle.addEventListener('click', openMenu);
+        closeBtn.addEventListener('click', closeMenu);
+        menuOverlay.addEventListener('click', closeMenu);
+        // Close menu when a link is clicked
+        mobileNavLinks.forEach(link => link.addEventListener('click', closeMenu));
+
+
+        // --- Hero Slider Logic ---
+        const slider = document.querySelector('.hero-slider');
         const slidesWrapper = document.querySelector('.slides-wrapper');
         const slides = document.querySelectorAll('.slide');
         const prevBtn = document.querySelector('.prev');
         const nextBtn = document.querySelector('.next');
         const dotsContainer = document.querySelector('.slider-dots');
+        
         let currentSlide = 0;
         let slideInterval;
 
+        // Swipe functionality variables
+        let isDragging = false;
+        let startPos = 0;
+        let currentTranslate = 0;
+        let prevTranslate = 0;
+        let animationID;
+
+        // Create dots for each slide
         slides.forEach((_, i) => {
             const dot = document.createElement('div');
             dot.classList.add('dot');
@@ -465,9 +582,26 @@
         const dots = document.querySelectorAll('.dot');
 
         function goToSlide(slideNumber) {
-            slidesWrapper.style.transform = `translateX(-${slideNumber * 100}%)`;
-            dots.forEach(dot => dot.classList.remove('active'));
-            dots[slideNumber].classList.add('active');
+            slidesWrapper.style.transition = 'transform 0.5s ease-in-out';
+            const slide = slides[slideNumber];
+            if (!slide) return;
+
+            if (window.innerWidth <= 768) {
+                const sliderWidth = slider.offsetWidth;
+                const slideWidth = slide.offsetWidth;
+                const slideOffsetLeft = slide.offsetLeft;
+                currentTranslate = (slideOffsetLeft + (slideWidth / 2) - (sliderWidth / 2)) * -1;
+            } else {
+                currentTranslate = slideNumber * slider.offsetWidth * -1;
+            }
+
+            setSliderPosition();
+            prevTranslate = currentTranslate;
+            
+            dots.forEach(d => d.classList.remove('active'));
+            if (dots[slideNumber]) {
+                dots[slideNumber].classList.add('active');
+            }
             currentSlide = slideNumber;
         }
 
@@ -481,14 +615,72 @@
             slideInterval = setInterval(nextSlide, 5000);
         }
 
+        // Button Listeners
         nextBtn.addEventListener('click', () => { nextSlide(); resetInterval(); });
         prevBtn.addEventListener('click', () => {
             currentSlide = (currentSlide - 1 + slides.length) % slides.length;
             goToSlide(currentSlide);
             resetInterval();
         });
+
+        // --- Swipe Event Listeners ---
+        slidesWrapper.addEventListener('mousedown', dragStart);
+        slidesWrapper.addEventListener('touchstart', dragStart, { passive: true });
+        slidesWrapper.addEventListener('mouseup', dragEnd);
+        slidesWrapper.addEventListener('mouseleave', dragEnd);
+        slidesWrapper.addEventListener('touchend', dragEnd);
+        slidesWrapper.addEventListener('mousemove', drag);
+        slidesWrapper.addEventListener('touchmove', drag);
+
+        function dragStart(event) {
+            isDragging = true;
+            startPos = getPositionX(event);
+            slidesWrapper.style.transition = 'none';
+            slidesWrapper.classList.add('grabbing');
+            resetInterval();
+            animationID = requestAnimationFrame(animation);
+        }
         
+        function drag(event) {
+            if (isDragging) {
+                const currentPosition = getPositionX(event);
+                currentTranslate = prevTranslate + currentPosition - startPos;
+            }
+        }
+
+        function animation() {
+            setSliderPosition();
+            if (isDragging) requestAnimationFrame(animation);
+        }
+
+        function setSliderPosition() {
+             slidesWrapper.style.transform = `translateX(${currentTranslate}px)`;
+        }
+
+        function dragEnd() {
+            cancelAnimationFrame(animationID);
+            isDragging = false;
+            const movedBy = currentTranslate - prevTranslate;
+
+            if (movedBy < -100 && currentSlide < slides.length - 1) {
+                currentSlide += 1;
+            }
+            if (movedBy > 100 && currentSlide > 0) {
+                currentSlide -= 1;
+            }
+            
+            goToSlide(currentSlide);
+            slidesWrapper.classList.remove('grabbing');
+        }
+
+        function getPositionX(event) {
+            return event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
+        }
+        
+        // Initial setup
+        goToSlide(0);
         slideInterval = setInterval(nextSlide, 5000);
+        window.addEventListener('resize', () => goToSlide(currentSlide));
     </script>
 
 </body>
