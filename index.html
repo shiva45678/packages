@@ -117,6 +117,48 @@
             background-color: var(--secondary-color);
         }
 
+        /* Search Overlay */
+        .search-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1003;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .search-overlay.active {
+            display: flex;
+        }
+        .search-overlay .search-wrapper {
+            width: 100%;
+            max-width: 500px;
+        }
+        .search-overlay .search-bar-container {
+            margin-left: 0;
+        }
+        .search-overlay .close-search-btn {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 2.5em;
+            color: var(--white);
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+        .mobile-search-icon {
+            display: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            margin-left: 20px;
+        }
+
         .search-results-dropdown {
             display: none; /* Hidden by default */
             position: absolute;
@@ -145,6 +187,48 @@
 
         .search-result-item:hover {
             background-color: #f5f5f5;
+        }
+
+        /* Search Overlay */
+        .search-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1003;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .search-overlay.active {
+            display: flex;
+        }
+        .search-overlay .search-wrapper {
+            width: 100%;
+            max-width: 500px;
+        }
+        .search-overlay .search-bar-container {
+            margin-left: 0;
+        }
+        .search-overlay .close-search-btn {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 2.5em;
+            color: var(--white);
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+        .mobile-search-icon {
+            display: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            margin-left: 20px;
         }
 
         /* --- Improved Side Panel --- */
@@ -487,9 +571,8 @@
         }
         @media (max-width: 768px) {
             .section-title { font-size: 1.8em; }
-            .desktop-nav-links { display: none; }
-            .search-bar-container { display: none; } /* Hide search bar on small screens for now */
-            .menu-toggle { display: block; }
+            .desktop-nav-links, .navbar .search-wrapper { display: none; }
+            .mobile-search-icon, .menu-toggle { display: block; }
             
             .hero-slider { height: auto; max-height: none; }
              .hero-title {
@@ -545,9 +628,22 @@
                 </div>
                 <div id="searchResults" class="search-results-dropdown"></div>
             </div>
+            <div class="mobile-search-icon"><i class="fas fa-search"></i></div>
             <div class="menu-toggle"><i class="fas fa-bars"></i></div>
         </nav>
     </header>
+
+    <!-- Search Overlay for Mobile -->
+    <div class="search-overlay">
+        <button class="close-search-btn">&times;</button>
+        <div class="search-wrapper">
+            <div class="search-bar-container">
+                <input type="text" id="mobileTestSearch" placeholder="Search for tests..." class="search-input" autocomplete="off">
+                <button id="mobileSearchButton" class="search-button"><i class="fas fa-search"></i></button>
+            </div>
+            <div id="mobileSearchResults" class="search-results-dropdown"></div>
+        </div>
+    </div>
 
     <!-- Side Menu for Mobile -->
     <div class="menu-overlay"></div>
@@ -1373,9 +1469,82 @@
         // Hide dropdown if clicked outside
         document.addEventListener('click', function(event) {
             const searchWrapper = document.querySelector('.search-wrapper');
-            if (!searchWrapper.contains(event.target)) {
+            if (searchWrapper && !searchWrapper.contains(event.target)) {
                 searchResultsContainer.style.display = 'none';
             }
+        });
+
+        // --- Mobile Search Overlay Logic ---
+        const mobileSearchIcon = document.querySelector('.mobile-search-icon');
+        const searchOverlay = document.querySelector('.search-overlay');
+        const closeSearchBtn = document.querySelector('.close-search-btn');
+        const mobileSearchInput = document.getElementById('mobileTestSearch');
+        const mobileSearchButton = document.getElementById('mobileSearchButton');
+        const mobileSearchResultsContainer = document.getElementById('mobileSearchResults');
+
+        mobileSearchIcon.addEventListener('click', () => {
+            searchOverlay.classList.add('active');
+        });
+
+        closeSearchBtn.addEventListener('click', () => {
+            searchOverlay.classList.remove('active');
+        });
+
+        function filterMobileTests() {
+            const searchTerm = mobileSearchInput.value.toLowerCase().trim();
+            mobileSearchResultsContainer.innerHTML = '';
+
+            if (searchTerm.length === 0) {
+                mobileSearchResultsContainer.style.display = 'none';
+                return;
+            }
+
+            const matchedTests = [];
+            allTestCards.forEach(card => {
+                const titleElement = card.querySelector('h4');
+                const testsListElement = card.querySelector('.tests-list');
+                const title = titleElement ? titleElement.textContent.toLowerCase() : '';
+                const testsList = testsListElement ? testsListElement.textContent.toLowerCase() : '';
+
+                if (title.includes(searchTerm) || testsList.includes(searchTerm)) {
+                    matchedTests.push({
+                        title: titleElement.textContent,
+                        id: card.id
+                    });
+                }
+            });
+
+            if (matchedTests.length > 0) {
+                matchedTests.forEach(test => {
+                    const item = document.createElement('div');
+                    item.classList.add('search-result-item');
+                    item.textContent = test.title;
+                    item.addEventListener('click', () => {
+                        searchOverlay.classList.remove('active'); // Close overlay
+                        const targetElement = document.getElementById(test.id);
+                        if (targetElement) {
+                            targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            targetElement.style.transition = 'box-shadow 0.3s';
+                            targetElement.style.boxShadow = '0 0 15px var(--accent-color)';
+                            setTimeout(() => {
+                                targetElement.style.boxShadow = '';
+                            }, 2000);
+                        }
+                        mobileSearchInput.value = '';
+                        mobileSearchResultsContainer.style.display = 'none';
+                    });
+                    mobileSearchResultsContainer.appendChild(item);
+                });
+                mobileSearchResultsContainer.style.display = 'block';
+            } else {
+                mobileSearchResultsContainer.style.display = 'none';
+            }
+        }
+
+        mobileSearchInput.addEventListener('keyup', filterMobileTests);
+        mobileSearchButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            filterMobileTests();
         });
     </script>
 
