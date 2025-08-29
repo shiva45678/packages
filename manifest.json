@@ -1,6 +1,6 @@
 {
-  "name": "Nandigama Tests PWA",
-  "short_name": "Nandigama PWA",
+  "name": "Tests Nandigama",
+  "short_name": "Tests Nandigama",
   "description": "A Progressive Web App for Nandigama Tests",
   "start_url": "/",
   "display": "standalone",
