@@ -3,23 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#000000">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- SEO and Social Media Metadata -->
     <title>Health Packages - Newtons Ai Hospitals</title>
-    <meta name="description" content="Explore and book affordable health checkup packages from Newtons Ai Hospitals. Get comprehensive tests and consultations at great prices.">
+    <meta name="description" content="Explore and book affordable health checkup packages from Newtons Ai Hospitals. Get comprehensive tests with free home sample collection.">
     
     <!-- Open Graph / Facebook / WhatsApp -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://your-website-url.com/"> <!-- Replace with your actual URL -->
+    <meta property="og:url" content="https://packages.newtons.in/"> <!-- Replace with your actual URL -->
     <meta property="og:title" content="Book Health Packages by Clicking This Link">
-    <meta property="og:description" content="Affordable and comprehensive health checkups from Newtons Ai Hospitals. Book now!">
+    <meta property="og:description" content="Affordable health checkups with free home sample collection from Newtons Ai Hospitals. Book now!">
     <meta property="og:image" content="https://mediwheel.in/uploads/blog/basic-health-checkup-packages.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://your-website-url.com/"> <!-- Replace with your actual URL -->
+    <meta property="twitter:url" content="https://packages.newtons.in/"> <!-- Replace with your actual URL -->
     <meta property="twitter:title" content="Book Health Packages by Clicking This Link">
-    <meta property="twitter:description" content="Affordable and comprehensive health checkups from Newtons Ai Hospitals. Book now!">
+    <meta property="twitter:description" content="Affordable health checkups with free home sample collection from Newtons Ai Hospitals. Book now!">
     <meta property="twitter:image" content="https://mediwheel.in/uploads/blog/basic-health-checkup-packages.png">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -35,6 +39,7 @@
             --light-bg: #F5F7FA;
             --white: #fff;
             --text-color: #333;
+            --whatsapp-green: #25D366;
         }
 
         /* General Styles */
@@ -149,6 +154,20 @@
             overflow: hidden;
             background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
         }
+        .hero-title {
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 20;
+            color: var(--white);
+            font-size: 2.2em;
+            font-weight: 700;
+            text-align: center;
+            width: 90%;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+            pointer-events: none; /* Prevents text from blocking slider drag */
+        }
         .slides-wrapper { 
             display: flex; 
             width: 100%; 
@@ -231,7 +250,12 @@
             display: flex; flex-direction: column;
         }
         .package-card:hover { transform: translateY(-10px); box-shadow: 0 10px 35px rgba(0,0,0,0.1); }
-        .package-image img { width: 100%; height: 200px; object-fit: cover; }
+        .package-image img { 
+            width: 100%; 
+            height: 200px; 
+            object-fit: cover;
+            object-position: center; /* This centers the image, creating a zoom effect */
+        }
         .package-content { padding: 25px; flex-grow: 1; display: flex; flex-direction: column; }
         .package-content h4 { margin-top: 0; color: var(--primary-color); font-size: 1.3em; }
         .price-container { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; flex-wrap: wrap;}
@@ -241,7 +265,7 @@
             background-color: var(--sale-color); color: var(--white);
             padding: 3px 10px; border-radius: 50px; font-size: 0.8em; font-weight: 700;
         }
-        .package-content .tests-list { flex-grow: 1; margin-bottom: 20px; color: #555; }
+        .package-content .tests-list { margin-bottom: 20px; color: #555; }
         .buy-now-button {
             display: block; width: 100%; text-align: center;
             background-color: var(--accent-color); color: var(--text-color);
@@ -251,6 +275,118 @@
         }
         .buy-now-button:hover { background-color: #ffcd38; transform: scale(1.05); }
 
+        .button-container {
+            margin-top: auto;
+            padding-top: 20px;
+        }
+
+        .whatsapp-order-button {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: center;
+            background-color: var(--whatsapp-green);
+            color: var(--white);
+            padding: 15px;
+            margin-top: 10px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1.1em;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .whatsapp-order-button:hover {
+            background-color: #128C7E; /* Darker WhatsApp Green */
+            transform: scale(1.05);
+        }
+        .whatsapp-order-button .fab.fa-whatsapp {
+            margin-right: 8px;
+        }
+        .slide-content .whatsapp-order-button {
+             display: inline-block;
+             width: auto;
+             padding: 15px 35px;
+             border-radius: 50px;
+        }
+        
+        /* PWA Install Popup Styles */
+        .pwa-install-popup-overlay {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .pwa-install-popup-content {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            position: relative;
+            animation: fadeInScale 0.3s ease-out;
+        }
+
+        .pwa-install-popup-content .close-popup-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.8em;
+            color: #888;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .pwa-install-popup-content h3 {
+            color: var(--primary-color);
+            font-size: 1.5em;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .pwa-install-popup-content p {
+            color: var(--text-color);
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .pwa-install-popup-content .install-btn {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .pwa-install-popup-content .install-btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
         /* Other Sections */
         #about, #contact { background-color: var(--white); }
         #contact { background: var(--light-bg); }
@@ -263,6 +399,12 @@
         footer { background-color: var(--secondary-color); color: var(--white); padding: 40px 0; text-align: center; }
         .social-media a { color: var(--white); margin: 0 10px; font-size: 1.5em; transition: color 0.3s; }
         .social-media a:hover { color: var(--accent-color); }
+
+        /* Logo Styling */
+        img[src="logo.png"] {
+            border-radius: 50%;
+            object-fit: cover; /* Ensures the image covers the circular area */
+        }
         
         /* Responsive Styles */
         @media (max-width: 992px) {
@@ -275,6 +417,10 @@
             .menu-toggle { display: block; }
             
             .hero-slider { height: auto; max-height: none; }
+             .hero-title {
+                font-size: 1.6em;
+                top: 15px;
+            }
             .slides-wrapper { align-items: center; }
             .slide { 
                 flex: 0 0 85%;
@@ -289,10 +435,28 @@
     </style>
 </head>
 <body>
+    <!-- PWA Install Popup -->
+    <div id="pwaInstallPopup" class="pwa-install-popup-overlay">
+        <div class="pwa-install-popup-content">
+            <button class="close-popup-btn">&times;</button>
+            <h3>Install Our App for a Better Experience!</h3>
+            <p>Get full features, offline access, and faster loading times by installing our app to your home screen.</p>
+            <button class="install-btn">Install App</button>
+        </div>
+    </div>
+
+    <div id="installBanner" style="display: none; background-color: var(--primary-color); color: var(--white); text-align: center; padding: 10px; position: sticky; top: 0; z-index: 1001;">
+        Install our app for a better experience!
+        <button id="installButton" style="background-color: var(--accent-color); color: var(--text-color); border: none; padding: 5px 15px; border-radius: 5px; margin-left: 10px; cursor: pointer;">Install</button>
+        <button id="closeInstallBanner" style="background: none; border: none; color: var(--white); font-size: 1.2em; margin-left: 10px; cursor: pointer;">&times;</button>
+    </div>
 
     <header>
         <nav class="navbar container">
-            <div class="logo">Newtons <span class="ai-text">Ai</span> Hospitals</div>
+            <div class="logo">
+                <img src="logo.png" alt="Newtons Ai Hospitals Logo" style="height: 40px; vertical-align: middle;">
+                <span style="margin-left: 10px; font-size: 1.2em; font-weight: 700; color: var(--primary-color);">Newtons Ai Hospitals</span>
+            </div>
             <ul class="desktop-nav-links">
                 <li><a href="#packages">Packages</a></li>
                 <li><a href="#about">About Us</a></li>
@@ -315,8 +479,55 @@
 
     <main>
         <section id="hero" class="hero-slider">
+            <div class="hero-title">
+                <p style="margin-top: 10px; margin-bottom: 0; font-size: 1.8em; font-weight: 700;">నందిగామ</p>
+            </div>
             <div class="slides-wrapper">
-                <!-- Slide 1: Basic Package -->
+                <!-- Slide 1: Free Sugar Test -->
+                <div class="slide">
+                    <div class="slide-card">
+                        <div class="slide-image"><img src="https://i.postimg.cc/tCwZV7vv/sugar.jpg" alt="Free Sugar Test"></div>
+                        <div class="slide-content">
+                            <h1>Free Sugar Test (RBS)</h1>
+                            <div class="price">Now FREE!</div>
+                            <a href="#" onclick="handleFreeTestBooking('https://wa.me/916363111328?text=I%20would%20like%20to%20book%20the%20Free%20Home%20Test%3A%20Sugar%20Test%20(RBS).')" class="cta-button" style="background-color: var(--primary-color); color: var(--white);">Book Free Home Test</a>
+                        </div>
+                    </div>
+                </div>
+                 <!-- Slide 2: Free Hb Test -->
+                 <div class="slide">
+                    <div class="slide-card">
+                        <div class="slide-image"><img src="https://i.postimg.cc/nLtX0gJv/Anaemia-Types1-telugu.jpg" alt="Free Blood Hb Percentage Test"></div>
+                        <div class="slide-content">
+                            <h1>Free Blood Hb % Test</h1>
+                            <div class="price">Now FREE!</div>
+                            <a href="#" onclick="handleFreeTestBooking('https://wa.me/916363111328?text=I%20would%20like%20to%20book%20the%20Free%20Home%20Test%3A%20Blood%20Hb%20Percentage%20Test.')" class="cta-button" style="background-color: var(--primary-color); color: var(--white);">Book Free Home Test</a>
+                        </div>
+                    </div>
+                </div>
+                 <!-- Slide 3: Free Blood Group Test -->
+                 <div class="slide">
+                    <div class="slide-card">
+                        <div class="slide-image"><img src="https://i.postimg.cc/jjNzjysh/blooddd.jpg" alt="Free Blood Group Test"></div>
+                        <div class="slide-content">
+                            <h1>Free Blood Group Test</h1>
+                            <div class="price">Now FREE!</div>
+                            <a href="#" onclick="handleFreeTestBooking('https://wa.me/916363111328?text=I%20would%20like%20to%20book%20the%20Free%20Home%20Test%3A%20Blood%20Grouping%20Test.')" class="cta-button" style="background-color: var(--primary-color); color: var(--white);">Book Free Home Test</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slide 4: Free Cholesterol Test -->
+                <div class="slide">
+                    <div class="slide-card">
+                        <div class="slide-image"><img src="https://i.postimg.cc/yYVnrpVC/cholesterol-Body1-2.png" alt="Free Cholesterol Test"></div>
+                        <div class="slide-content">
+                            <h1>Free Cholesterol Test</h1>
+                            <div class="price">Now FREE!</div>
+                            <a href="#" onclick="handleFreeTestBooking('https://wa.me/916363111328?text=I%20would%20like%20to%20book%20the%20Free%20Home%20Test%3A%20Cholesterol%20(Total)%20Test.')" class="cta-button" style="background-color: var(--primary-color); color: var(--white);">Book Free Home Test</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slide 5: Basic Package -->
                 <div class="slide">
                     <div class="slide-card">
                         <div class="slide-image"><img src="https://mediwheel.in/uploads/blog/basic-health-checkup-packages.png" alt="Basic Health Checkup"></div>
@@ -324,10 +535,11 @@
                             <h1>Basic Health Package</h1>
                             <div class="price">Now at just ₹500!</div>
                             <form><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_R5XoJpLSejNvWV" async> </script> </form>
+                            <a href="https://wa.me/916363111328?text=I%20would%20like%20to%20order%20the%20Basic%20Health%20Package%20via%20WhatsApp." target="_blank" class="whatsapp-order-button"><i class="fab fa-whatsapp"></i> Order on WhatsApp</a>
                         </div>
                     </div>
                 </div>
-                <!-- Slide 2: Joint Pain Package -->
+                <!-- Slide 6: Joint Pain Package -->
                 <div class="slide">
                     <div class="slide-card">
                        <div class="slide-image"><img src="https://ppschicago.com/wp-content/uploads/2023/11/The-Best-Pain-Management-Treatment-in-Long-Beach-NY.jpg" alt="Joint Pain Package"></div>
@@ -335,10 +547,11 @@
                             <h1>Joint Pain Package</h1>
                             <div class="price">Special Offer: ₹1,000</div>
                             <form><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_R5XvzCDZslW1LB" async> </script> </form>
+                             <a href="https://wa.me/916363111328?text=I%20would%20like%20to%20order%20the%20Joint%20Pain%20Package%20via%20WhatsApp." target="_blank" class="whatsapp-order-button"><i class="fab fa-whatsapp"></i> Order on WhatsApp</a>
                         </div>
                     </div>
                 </div>
-                 <!-- Slide 3: Senior Citizen Package -->
+                 <!-- Slide 7: Senior Citizen Package -->
                  <div class="slide">
                      <div class="slide-card">
                         <div class="slide-image"><img src="https://www.southindianbank.com/Userfiles/Blog/19341902822229.jpg" alt="Senior Citizen Package"></div>
@@ -346,10 +559,11 @@
                             <h1>Senior Citizen Package</h1>
                             <div class="price">Care for Elders: ₹1,500</div>
                             <form><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_R5Y6tr3NOM3vpU" async> </script> </form>
+                            <a href="https://wa.me/916363111328?text=I%20would%20like%20to%20order%20the%20Senior%20Citizen%20Package%20via%20WhatsApp." target="_blank" class="whatsapp-order-button"><i class="fab fa-whatsapp"></i> Order on WhatsApp</a>
                         </div>
                     </div>
                 </div>
-                <!-- Slide 4: Women's Package -->
+                <!-- Slide 8: Women's Package -->
                 <div class="slide">
                     <div class="slide-card">
                         <div class="slide-image"><img src="https://images.moneycontrol.com/static-mcnews/2025/07/20250720120501_Shruti-Haasan.jpg" alt="Women's Package"></div>
@@ -357,6 +571,7 @@
                             <h1>Women’s Health Package</h1>
                             <div class="price">For Her Wellness: ₹1,400</div>
                             <form><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_R5Y5hZc7LcQaRk" async> </script> </form>
+                            <a href="https://wa.me/916363111328?text=I%20would%20like%20to%20order%20the%20Women%E2%80%99s%20Health%20Package%20via%20WhatsApp." target="_blank" class="whatsapp-order-button"><i class="fab fa-whatsapp"></i> Order on WhatsApp</a>
                         </div>
                     </div>
                 </div>
@@ -369,8 +584,79 @@
         <section id="packages">
             <div class="container">
                 <h2 class="section-title">Limited Time Health Offers</h2>
+                <p style="text-align: center; margin-top: -40px; margin-bottom: 40px; font-size: 1.2em; color: var(--primary-color); font-weight: 600;">
+                    <i class="fas fa-home"></i> All Tests Available with FREE Home Sample Collection!
+                </p>
                 <div class="packages-grid">
                     
+                    <!-- Free Sugar Test -->
+                    <div class="package-card">
+                        <div class="package-image"><img src="https://i.postimg.cc/tCwZV7vv/sugar.jpg" alt="Free Sugar Test"></div>
+                        <div class="package-content">
+                            <h4>Free Sugar Test (RBS)</h4>
+                            <div class="price-container">
+                                <div class="price-tag">₹0</div>
+                                <div class="original-price">₹100</div>
+                                <div class="discount-badge">FREE</div>
+                            </div>
+                            <p class="tests-list">Check your random blood sugar level instantly. Essential for everyone, especially diabetics.</p>
+                            <div class="button-container">
+                                <a href="#" onclick="handleFreeTestBooking('https://wa.me/916363111328?text=I%20would%20like%20to%20book%20the%20Free%20Home%20Test%3A%20Sugar%20Test%20(RBS).')" class="buy-now-button" style="background-color: var(--primary-color); color: var(--white);">Book Free Home Test</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Free Blood Hb Percentage Test -->
+                    <div class="package-card">
+                        <div class="package-image"><img src="https://i.postimg.cc/nLtX0gJv/Anaemia-Types1-telugu.jpg" alt="Free Blood Hb Test"></div>
+                        <div class="package-content">
+                            <h4>Free Blood Hb Percentage Test</h4>
+                            <div class="price-container">
+                                <div class="price-tag">₹0</div>
+                                <div class="original-price">₹150</div>
+                                <div class="discount-badge">FREE</div>
+                            </div>
+                            <p class="tests-list">Know your blood level. Crucial for detecting anemia, especially in women and children.</p>
+                             <div class="button-container">
+                                <a href="#" onclick="handleFreeTestBooking('https://wa.me/916363111328?text=I%20would%20like%20to%20book%20the%20Free%20Home%20Test%3A%20Blood%20Hb%20Percentage%20Test.')" class="buy-now-button" style="background-color: var(--primary-color); color: var(--white);">Book Free Home Test</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Free Blood Group Test -->
+                    <div class="package-card">
+                        <div class="package-image"><img src="https://i.postimg.cc/jjNzjysh/blooddd.jpg" alt="Free Blood Group Test"></div>
+                        <div class="package-content">
+                            <h4>Free Blood Group Test</h4>
+                            <div class="price-container">
+                                <div class="price-tag">₹0</div>
+                                <div class="original-price">₹150</div>
+                                <div class="discount-badge">FREE</div>
+                            </div>
+                            <p class="tests-list">Find out your ABO & Rh blood type. Important for emergencies, students, and parents.</p>
+                             <div class="button-container">
+                                <a href="#" onclick="handleFreeTestBooking('https://wa.me/916363111328?text=I%20would%20like%20to%20book%20the%20Free%20Home%20Test%3A%20Blood%20Grouping%20Test.')" class="buy-now-button" style="background-color: var(--primary-color); color: var(--white);">Book Free Home Test</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Free Cholesterol Test -->
+                    <div class="package-card">
+                        <div class="package-image"><img src="https://i.postimg.cc/yYVnrpVC/cholesterol-Body1-2.png" alt="Free Cholesterol Test"></div>
+                        <div class="package-content">
+                            <h4>Free Cholesterol (Total) Test</h4>
+                            <div class="price-container">
+                                <div class="price-tag">₹0</div>
+                                <div class="original-price">₹100</div>
+                                <div class="discount-badge">FREE</div>
+                            </div>
+                            <p class="tests-list">A basic check for your heart health. Recommended for middle-aged and older adults.</p>
+                             <div class="button-container">
+                                <a href="#" onclick="handleFreeTestBooking('https://wa.me/916363111328?text=I%20would%20like%20to%20book%20the%20Free%20Home%20Test%3A%20Cholesterol%20(Total)%20Test.')" class="buy-now-button" style="background-color: var(--primary-color); color: var(--white);">Book Free Home Test</a>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Basic Health Package -->
                     <div class="package-card">
                         <div class="package-image"><img src="https://mediwheel.in/uploads/blog/basic-health-checkup-packages.png" alt="Basic Health Checkup"></div>
@@ -382,7 +668,10 @@
                                 <div class="discount-badge">33% OFF</div>
                             </div>
                             <p class="tests-list">Includes: RFT, Urine Routine, Blood Grouping, ECG, AI Consultation, Doctor Consultation.</p>
-                            <form><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_R5XoJpLSejNvWV" async> </script> </form>
+                            <div class="button-container">
+                                <form><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_R5XoJpLSejNvWV" async> </script> </form>
+                                <a href="https://wa.me/916363111328?text=I%20would%20like%20to%20order%20the%20Basic%20Health%20Package%20via%20WhatsApp." target="_blank" class="whatsapp-order-button"><i class="fab fa-whatsapp"></i> Order on WhatsApp</a>
+                            </div>
                         </div>
                     </div>
 
@@ -397,7 +686,10 @@
                                 <div class="discount-badge">33% OFF</div>
                             </div>
                             <p class="tests-list">Includes Basic Package + CRP, Uric Acid, RA Factor.</p>
-                            <form><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_R5XvzCDZslW1LB" async> </script> </form>
+                            <div class="button-container">
+                                <form><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_R5XvzCDZslW1LB" async> </script> </form>
+                                <a href="https://wa.me/916363111328?text=I%20would%20like%20to%20order%20the%20Joint%20Pain%20Package%20via%20WhatsApp." target="_blank" class="whatsapp-order-button"><i class="fab fa-whatsapp"></i> Order on WhatsApp</a>
+                            </div>
                         </div>
                     </div>
 
@@ -412,7 +704,10 @@
                                 <div class="discount-badge">33% OFF</div>
                             </div>
                             <p class="tests-list">Includes Basic Package + TSH.</p>
-                            <form><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_R5XyS03eB7huIF" async> </script> </form>
+                            <div class="button-container">
+                                <form><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_R5XyS03eB7huIF" async> </script> </form>
+                                <a href="https://wa.me/916363111328?text=I%20would%20like%20to%20order%20the%20Thyroid%20Package%20via%20WhatsApp." target="_blank" class="whatsapp-order-button"><i class="fab fa-whatsapp"></i> Order on WhatsApp</a>
+                            </div>
                         </div>
                     </div>
 
@@ -427,7 +722,10 @@
                                 <div class="discount-badge">31% OFF</div>
                             </div>
                             <p class="tests-list">Includes Basic Package + HIV, HBsAg, VDRL.</p>
-                            <form><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_R5Y10ACk8yVdyx" async> </script> </form>
+                            <div class="button-container">
+                                <form><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_R5Y10ACk8yVdyx" async> </script> </form>
+                                <a href="https://wa.me/916363111328?text=I%20would%20like%20to%20order%20the%20Infection%20Screening%20Package%20via%20WhatsApp." target="_blank" class="whatsapp-order-button"><i class="fab fa-whatsapp"></i> Order on WhatsApp</a>
+                            </div>
                         </div>
                     </div>
 
@@ -442,7 +740,10 @@
                                 <div class="discount-badge">33% OFF</div>
                             </div>
                             <p class="tests-list">Includes Basic Package + Lipid Profile, Trop I/Trop T.</p>
-                            <form><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_R5Y2bS9QIZawZg" async> </script> </form>
+                            <div class="button-container">
+                                <form><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_R5Y2bS9QIZawZg" async> </script> </form>
+                                <a href="https://wa.me/916363111328?text=I%20would%20like%20to%20order%20the%20Heart%20Package%20via%20WhatsApp." target="_blank" class="whatsapp-order-button"><i class="fab fa-whatsapp"></i> Order on WhatsApp</a>
+                            </div>
                         </div>
                     </div>
 
@@ -457,7 +758,10 @@
                                 <div class="discount-badge">31% OFF</div>
                             </div>
                             <p class="tests-list">Includes Basic Package + LFT, GGT, Lipid Profile.</p>
-                            <form><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_R5Y4NhlsicS0Fy" async> </script> </form>
+                            <div class="button-container">
+                                <form><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_R5Y4NhlsicS0Fy" async> </script> </form>
+                                <a href="https://wa.me/916363111328?text=I%20would%20like%20to%20order%20the%20Alcoholics%20Package%20via%20WhatsApp." target="_blank" class="whatsapp-order-button"><i class="fab fa-whatsapp"></i> Order on WhatsApp</a>
+                            </div>
                         </div>
                     </div>
                     
@@ -472,7 +776,10 @@
                                 <div class="discount-badge">30% OFF</div>
                             </div>
                             <p class="tests-list">Includes Basic Package + TSH, Hb%, Pap Smear.</p>
-                            <form><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_R5Y5hZc7LcQaRk" async> </script> </form>
+                            <div class="button-container">
+                                <form><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_R5Y5hZc7LcQaRk" async> </script> </form>
+                                <a href="https://wa.me/916363111328?text=I%20would%20like%20to%20order%20the%20Women%E2%80%99s%20Package%20via%20WhatsApp." target="_blank" class="whatsapp-order-button"><i class="fab fa-whatsapp"></i> Order on WhatsApp</a>
+                            </div>
                         </div>
                     </div>
 
@@ -487,7 +794,10 @@
                                 <div class="discount-badge">25% OFF</div>
                             </div>
                             <p class="tests-list">Includes Basic Package + FBS, LFT, Lipid Profile, TSH.</p>
-                            <form><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_R5Y6tr3NOM3vpU" async> </script> </form>
+                            <div class="button-container">
+                                <form><script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_R5Y6tr3NOM3vpU" async> </script> </form>
+                                <a href="https://wa.me/916363111328?text=I%20would%20like%20to%20order%20the%20Senior%20Citizen%20Package%20via%20WhatsApp." target="_blank" class="whatsapp-order-button"><i class="fab fa-whatsapp"></i> Order on WhatsApp</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -681,7 +991,113 @@
         goToSlide(0);
         slideInterval = setInterval(nextSlide, 5000);
         window.addEventListener('resize', () => goToSlide(currentSlide));
+
+        // PWA Install Prompt Logic
+        let deferredPrompt;
+        const pwaInstallPopup = document.getElementById('pwaInstallPopup');
+        const closePopupBtn = pwaInstallPopup.querySelector('.close-popup-btn');
+        const installAppBtn = pwaInstallPopup.querySelector('.install-btn');
+        let isAppInstalled = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+
+        // Hide the banner if the app is already installed or if it's not a PWA capable browser
+        if (isAppInstalled || !('BeforeInstallPromptEvent' in window)) {
+            // No banner or popup needed if already installed or not supported
+        }
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            // The banner is no longer needed, as we're using a popup
+            // installBanner.style.display = 'block';
+        });
+
+        installAppBtn.addEventListener('click', async () => {
+            pwaInstallPopup.style.display = 'none';
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                console.log(`User response to the install prompt: ${outcome}`);
+                if (outcome === 'accepted') {
+                    isAppInstalled = true;
+                }
+                deferredPrompt = null;
+            }
+        });
+
+        closePopupBtn.addEventListener('click', () => {
+            pwaInstallPopup.style.display = 'none';
+        });
+
+        window.addEventListener('appinstalled', () => {
+            isAppInstalled = true;
+            pwaInstallPopup.style.display = 'none';
+            console.log('PWA was installed');
+        });
+
+        function showInstallPopup() {
+            if (!isAppInstalled && deferredPrompt) {
+                pwaInstallPopup.style.display = 'flex';
+            }
+        }
+
+        // Intercept WhatsApp order clicks
+        document.querySelectorAll('.whatsapp-order-button').forEach(button => {
+            button.addEventListener('click', function(event) {
+                if (!isAppInstalled && deferredPrompt) {
+                    event.preventDefault(); // Prevent default navigation
+                    showInstallPopup();
+                    // Optionally, you can add logic here to proceed with WhatsApp link after install
+                    // For now, user has to click install or close, then click WhatsApp again
+                }
+            });
+        });
+
+        // Intercept Razorpay button clicks (Razorpay buttons are forms with scripts)
+        // We need to target the form submission or the script execution.
+        // A simpler approach is to wrap the Razorpay button in a div and intercept clicks on that div.
+        // Or, we can modify the Razorpay script to call our function.
+        // For now, let's assume Razorpay buttons are within a form and we can intercept form submission.
+        document.querySelectorAll('form').forEach(form => {
+            const scriptTag = form.querySelector('script[data-payment_button_id]');
+            if (scriptTag) {
+                // Create a wrapper div around the Razorpay form to intercept clicks
+                const wrapper = document.createElement('div');
+                wrapper.style.display = 'inline-block'; // To keep the button's original display
+                form.parentNode.insertBefore(wrapper, form);
+                wrapper.appendChild(form);
+
+                wrapper.addEventListener('click', function(event) {
+                    if (!isAppInstalled && deferredPrompt) {
+                        event.preventDefault(); // Prevent default Razorpay action
+                        event.stopPropagation(); // Stop propagation to prevent form submission
+                        showInstallPopup();
+                    }
+                });
+            }
+        });
+
+        // The handleFreeTestBooking function also needs to show the popup
+        function handleFreeTestBooking(whatsappLink) {
+            if (!isAppInstalled && deferredPrompt) {
+                showInstallPopup();
+            } else {
+                window.open(whatsappLink, '_blank');
+            }
+        }
     </script>
 
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/service-worker.js')
+            .then(registration => {
+              console.log('Service Worker registered: ', registration);
+            })
+            .catch(error => {
+              console.log('Service Worker registration failed: ', error);
+            });
+        });
+      }
+    </script>
 </body>
 </html>
