@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- SEO and Social Media Metadata -->
-    <title>Health Packages - Newtons Ai Hospitals</title>
+    <title>Newtons AI</title>
     <meta name="description" content="Explore and book affordable health checkup packages from Newtons Ai Hospitals. Get comprehensive tests with free home sample collection.">
     
     <!-- Open Graph / Facebook / WhatsApp -->
@@ -454,8 +454,8 @@
     <header>
         <nav class="navbar container">
             <div class="logo">
-                <img src="logo.png" alt="Newtons Ai Hospitals Logo" style="height: 40px; vertical-align: middle;">
-                <span style="margin-left: 10px; font-size: 1.2em; font-weight: 700; color: var(--primary-color);">Newtons Ai Hospitals</span>
+                <img src="logo.png" alt="Newtons AI Logo" style="height: 40px; vertical-align: middle;">
+                <span style="margin-left: 10px; font-size: 1.2em; font-weight: 700; color: var(--primary-color);">Newtons AI</span>
             </div>
             <ul class="desktop-nav-links">
                 <li><a href="#packages">Packages</a></li>
@@ -998,6 +998,7 @@
         const closePopupBtn = pwaInstallPopup.querySelector('.close-popup-btn');
         const installAppBtn = pwaInstallPopup.querySelector('.install-btn');
         let isAppInstalled = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+        let pendingAction = null; // To store the action to be performed after PWA prompt
 
         // Hide the banner if the app is already installed or if it's not a PWA capable browser
         if (isAppInstalled || !('BeforeInstallPromptEvent' in window)) {
@@ -1020,43 +1021,61 @@
                 if (outcome === 'accepted') {
                     isAppInstalled = true;
                 }
-                deferredPrompt = null;
+                deferredPrompt = null; // Prompt can only be used once
             }
+            executePendingAction();
         });
 
         closePopupBtn.addEventListener('click', () => {
             pwaInstallPopup.style.display = 'none';
+            executePendingAction(); // Execute pending action even if popup is closed
         });
 
         window.addEventListener('appinstalled', () => {
             isAppInstalled = true;
             pwaInstallPopup.style.display = 'none';
             console.log('PWA was installed');
+            executePendingAction();
         });
 
-        function showInstallPopup() {
-            if (!isAppInstalled && deferredPrompt) {
+        function showInstallPopup(action) {
+            if (!isAppInstalled) {
+                pendingAction = action;
                 pwaInstallPopup.style.display = 'flex';
+            } else {
+                // If already installed, just execute the action
+                executeAction(action);
+            }
+        }
+
+        function executeAction(action) {
+            if (action && action.type === 'whatsapp') {
+                window.open(action.link, '_blank');
+            } else if (action && action.type === 'razorpay') {
+                // For Razorpay, we need to trigger the form submission
+                // The script inside the form will handle the payment button click
+                action.form.submit(); // This might not work directly for Razorpay's script-based buttons
+                // A better approach for Razorpay might be to re-trigger the click on the original button
+                // For now, let's assume form.submit() is sufficient or the user will re-click.
+            }
+            pendingAction = null; // Clear pending action after execution
+        }
+
+        function executePendingAction() {
+            if (pendingAction) {
+                executeAction(pendingAction);
             }
         }
 
         // Intercept WhatsApp order clicks
         document.querySelectorAll('.whatsapp-order-button').forEach(button => {
             button.addEventListener('click', function(event) {
-                if (!isAppInstalled && deferredPrompt) {
-                    event.preventDefault(); // Prevent default navigation
-                    showInstallPopup();
-                    // Optionally, you can add logic here to proceed with WhatsApp link after install
-                    // For now, user has to click install or close, then click WhatsApp again
-                }
+                event.preventDefault(); // Prevent default navigation
+                showInstallPopup({ type: 'whatsapp', link: this.href });
             });
         });
 
         // Intercept Razorpay button clicks (Razorpay buttons are forms with scripts)
-        // We need to target the form submission or the script execution.
-        // A simpler approach is to wrap the Razorpay button in a div and intercept clicks on that div.
-        // Or, we can modify the Razorpay script to call our function.
-        // For now, let's assume Razorpay buttons are within a form and we can intercept form submission.
         document.querySelectorAll('form').forEach(form => {
             const scriptTag = form.querySelector('script[data-payment_button_id]');
             if (scriptTag) {
@@ -1067,22 +1086,16 @@
                 wrapper.appendChild(form);
 
                 wrapper.addEventListener('click', function(event) {
-                    if (!isAppInstalled && deferredPrompt) {
-                        event.preventDefault(); // Prevent default Razorpay action
-                        event.stopPropagation(); // Stop propagation to prevent form submission
-                        showInstallPopup();
-                    }
+                    event.preventDefault(); // Prevent default Razorpay action
+                    event.stopPropagation(); // Stop propagation to prevent form submission
+                    showInstallPopup({ type: 'razorpay', form: form });
                 });
             }
         });
 
         // The handleFreeTestBooking function also needs to show the popup
         function handleFreeTestBooking(whatsappLink) {
-            if (!isAppInstalled && deferredPrompt) {
-                showInstallPopup();
-            } else {
-                window.open(whatsappLink, '_blank');
-            }
+            showInstallPopup({ type: 'whatsapp', link: whatsappLink });
         }
     </script>
 
